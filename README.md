@@ -5,6 +5,8 @@ Liquidity Engine is a modern, full-stack real estate valuation platform designed
 
 ---
 
+##live link-https://liquidity-engine.onrender.com
+
 ## ✨ Key Features
 * **🧠 Hybrid AI Architecture:** Uses Python for strict mathematical grounding (base price calculation & age depreciation) and Groq (Llama-3) for nuanced risk and location intelligence.
 * **🕵️ Chain of Thought (CoT) Reasoning:** Provides full transparency. The dashboard displays the AI's step-by-step mathematical reasoning before showing the final valuation, completely eliminating "AI hallucinations."
