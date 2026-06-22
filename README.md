@@ -1,73 +1,60 @@
-# ⚡ Liquidity Engine - AI-Powered Collateral Valuation Dashboard
+# ⚡ Liquidity Engine
+**AI-Powered Collateral Valuation & Risk Assessment Dashboard**
 
-## live link- https://liquidity-engine.onrender.com
+Liquidity Engine is a modern, full-stack real estate valuation platform designed for banks and NBFCs. It uses a **Hybrid AI Architecture** combining deterministic Python mathematical modeling with the reasoning capabilities of Large Language Models (LLMs) to predict Market Value, Distress Value, and Liquidity Scores (RPI).
 
-## 📌 Overview
-The **Liquidity Engine** is a market-aware collateral intelligence dashboard designed for NBFCs, secured lenders, and real estate professionals. Moving beyond traditional, static pricing models, this engine utilizes advanced LLMs to evaluate both the **intrinsic value** (what the asset should sell for) and the **liquidity risk** (how fast and reliably it can be sold) of a property in the Indian Real Estate market.
+---
 
-## 🚀 Key Features
-Provide the engine with basic property details (Location, Size, Age, Property Type), and it dynamically generates:
-* **Estimated Market Value (₹):** Optimal price range in normal market conditions.
-* **Distress Sale Value (₹):** Fire-sale equivalent price incorporating liquidity discounts.
-* **Resale Potential Index (RPI):** A 0-100 score indicating how liquid/easy-to-sell the asset is.
-* **Time to Liquidate:** Estimated days required to sell the property.
-* **Risk Alerts & Key Drivers:** Automated anomaly detection (e.g., leasehold complexities, location mismatches) and positive valuation drivers.
+## ✨ Key Features
+* **🧠 Hybrid AI Architecture:** Uses Python for strict mathematical grounding (base price calculation & age depreciation) and Groq (Llama-3) for nuanced risk and location intelligence.
+* **🕵️ Chain of Thought (CoT) Reasoning:** Provides full transparency. The dashboard displays the AI's step-by-step mathematical reasoning before showing the final valuation, completely eliminating "AI hallucinations."
+* **📊 Data Grounding:** Implements a localized mock database for real-time area rates (e.g., Lucknow's Circle/Market Rates) to anchor the AI's predictions in reality.
+* **📉 Distress Value Calculation:** Accurately calculates "forced sale" values, separating land appreciation from building depreciation.
+* **🎛️ Granular Inputs:** Supports specific data points like Property Sub-type (Flat/Plot/Villa), Legal Status (Freehold/Leasehold), and Road Width to generate highly accurate bank-level valuations.
+* **🎨 Modern UI/UX:** Built with a sleek, dark-themed Glassmorphism interface using Tailwind CSS.
+
+---
 
 ## 🛠️ Tech Stack
-* **Frontend:** HTML5, Tailwind CSS, Vanilla JavaScript
-* **Backend:** Python, FastAPI
-* **AI Engine:** Groq API (using the `llama-3.3-70b-versatile` model)
-* **HTTP Client:** `httpx` (for async API calls)
+* **Backend:** FastAPI (Python)
+* **Frontend:** HTML5, Tailwind CSS, JavaScript (Vanilla)
+* **AI Integration:** Groq API (Meta Llama-3 Model)
+* **Environment Management:** `python-dotenv` for secure API key storage.
 
-## ⚙️ Installation & Setup
+---
 
-Follow these steps to run the project locally:
+## 🚀 Setup & Installation (Linux/Ubuntu)
 
-**1. Clone the repository (if applicable) or navigate to your project folder:**
+**1. Clone the repository**
 ```bash
+git clone <your-repository-url>
 cd Liquidity_Engine
-2. Set up a Virtual Environment (Recommended):
+2. Create a fresh Virtual Environment
+(Note: Do not move the .venv folder across directories. Always create a fresh one if the project path changes).
 
 Bash
-python -m venv .venv
-source .venv/bin/activate  # On Windows use: .venv\Scripts\activate
-3. Install the required dependencies:
+python3 -m venv .venv
+source .venv/bin/activate
+3. Install Dependencies
 
 Bash
-pip install fastapi uvicorn httpx
-4. Add your API Key:
+pip install fastapi uvicorn httpx python-dotenv
+4. Setup Environment Variables
+Create a .env file in the root directory and add your Groq API key:
 
-Open main.py in your code editor.
-
-Locate the Groq API Key variable.
-
-Replace the placeholder with your actual Groq API Key (gsk_...).
-
-5. Run the Server:
-Start the FastAPI server using Uvicorn:
+Code snippet
+GROQ_API_KEY=your_actual_api_key_here
+5. Run the Server
 
 Bash
 uvicorn main:app --reload
-6. Access the Dashboard:
-Open your web browser and go to:
-http://127.0.0.1:8000
+The dashboard will be live at http://127.0.0.1:8000.
 
-🧠 How it Works
-The user inputs property attributes via the intuitive UI.
+💡 How It Works
+Data Collection: The user inputs property details via the frontend.
 
-The frontend sends a POST request to the FastAPI backend /analyze endpoint.
+Deterministic Math (Backend): FastAPI calculates a base_price using grounded area rates and strict age-based building depreciation.
 
-The backend constructs a highly specific System Prompt instructing the AI to act as an "Expert Indian Real Estate Valuer" calculating strictly in INR (₹).
+AI Reasoning (LLM): The base price and granular details are passed to Llama-3. The AI is prompted to strictly use the base price and assess liquidity risks (Chain of Thought).
 
-The request is securely routed via Groq's lightning-fast inference engine using httpx.
-
-The LLM processes the location intelligence and property characteristics, returning a structured JSON response.
-
-The dashboard updates dynamically in real-time without page reloads.
-
-🚧 Future Scope
-Integration with Live Maps API for exact geospatial coordinates.
-
-Connecting to Government Circle Rate APIs for dynamic statutory floor values.
-
-Image upload feature for automated interior/exterior condition scoring.
+Final Output: The API returns the calculated values, risk flags, and reasoning steps to the user dashboard.
