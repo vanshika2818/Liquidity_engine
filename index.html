@@ -84,13 +84,43 @@
                         <input type="text" id="location" required class="input-field w-full rounded-lg px-3 py-2 text-sm" placeholder="e.g. Downtown Miami, FL" value="Downtown Miami, FL">
                     </div>
                     
-                    <div>
-                        <label class="block text-xs text-slate-400 mb-1 uppercase tracking-wider">Property Type</label>
-                        <select id="property_type" class="input-field w-full rounded-lg px-3 py-2 text-sm">
-                            <option value="Residential">Residential</option>
-                            <option value="Commercial">Commercial</option>
-                            <option value="Industrial">Industrial</option>
-                        </select>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1 uppercase tracking-wider">Category</label>
+                            <select id="category" class="input-field w-full rounded-lg px-3 py-2 text-sm">
+                                <option value="Residential">Residential</option>
+                                <option value="Commercial">Commercial</option>
+                                <option value="Land">Land</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1 uppercase tracking-wider">Sub-type</label>
+                            <select id="subtype" class="input-field w-full rounded-lg px-3 py-2 text-sm">
+                                <option value="Apartment">Apartment</option>
+                                <option value="Independent House">Independent House</option>
+                                <option value="Plot">Plot</option>
+                                <option value="Shop">Shop</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1 uppercase tracking-wider">Legal Status</label>
+                            <select id="legal_status" class="input-field w-full rounded-lg px-3 py-2 text-sm">
+                                <option value="Freehold">Freehold</option>
+                                <option value="Leasehold">Leasehold</option>
+                                <option value="Unregistered">Unregistered</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1 uppercase tracking-wider">Road Width</label>
+                            <select id="road_width" class="input-field w-full rounded-lg px-3 py-2 text-sm">
+                                <option value="Narrow Alley">Narrow Alley</option>
+                                <option value="Standard Road">Standard Road</option>
+                                <option value="Main Highway">Main Highway</option>
+                            </select>
+                        </div>
                     </div>
                     
                     <div class="grid grid-cols-2 gap-4">
@@ -160,6 +190,16 @@
                         </div>
                     </div>
 
+                    <div class="glass-panel rounded-xl p-5 mb-6 fade-in border-l-4 border-l-purple-500" style="animation-delay: 0.65s;">
+                        <h3 class="text-purple-300 text-xs font-semibold uppercase tracking-wider mb-3 flex items-center gap-2">
+                            <svg class="w-4 h-4 text-purple-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                            AI Reasoning & Mathematical Grounding (Chain of Thought)
+                        </h3>
+                        <div id="resReasoning" class="text-sm text-slate-300 leading-relaxed whitespace-pre-wrap bg-slate-900/40 p-4 rounded-xl border border-slate-800 font-mono">
+                            --
+                        </div>
+                    </div>
+
                     <div class="glass-panel rounded-xl p-5 fade-in" style="animation-delay: 0.7s;">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
@@ -206,7 +246,10 @@
 
             const payload = {
                 location: document.getElementById('location').value,
-                property_type: document.getElementById('property_type').value,
+                category: document.getElementById('category').value,
+                subtype: document.getElementById('subtype').value,
+                legal_status: document.getElementById('legal_status').value,
+                road_width: document.getElementById('road_width').value,
                 size_sqft: parseFloat(document.getElementById('size_sqft').value),
                 building_age_years: parseInt(document.getElementById('building_age_years').value)
             };
@@ -229,6 +272,7 @@
                 document.getElementById('resRpi').innerText = data.resale_potential_index;
                 document.getElementById('resTime').innerText = data.time_to_liquidate;
                 document.getElementById('resRiskCount').innerText = data.risk_flags ? data.risk_flags.length : 0;
+                document.getElementById('resReasoning').innerText = data.reasoning_steps || 'No reasoning steps provided.';
                 
                 renderList(data.key_drivers, 'resDrivers', 'driver');
                 renderList(data.risk_flags, 'resFlags', 'risk');
